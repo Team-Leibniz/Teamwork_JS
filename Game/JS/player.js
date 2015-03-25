@@ -5,7 +5,7 @@ var Player = (function(){
     function Player(x, y, rowClip) {
         this.position = new Vector2(x, y);
         this.movement = {left: false, right : false};
-        this.velocity = 5;
+        this.velocity = 3;
         this.width = 128;
         this.height = 48;
         this.scores = 0;

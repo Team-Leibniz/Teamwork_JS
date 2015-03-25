@@ -3,21 +3,29 @@
  */
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
+var bcgImage = new Image();
+bcgImage.src = "resources/roads.jpg";
 var previousTime = Date.now();
 var previousTimeRightBall = Date.now();
 var previousTimeLeftBall = Date.now();
+var previousTimeUpBall = Date.now();
+
+
+
 
 var input = new Input();
 attachListeners(input);
 
-var player1 = new Player(canvas.width/2, 1,0);
+var player1 = new Player(canvas.width/4, 1,0);
 
 
 var ballsArrRight = [];
 var ballsArrLeft = [];
+var ballsArrUp = [];
 //generateBalls();
 var prevRightBallRow;
 var prevLeftBallRow;
+var prevUpBallRow;
 
 
 function generateBalls(){
@@ -35,11 +43,19 @@ function generateBalls(){
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevLeftBallRow);
-        var posY = 50 + 100 * rand;
-        prevLeftBallRow = rand;
         var posY = 100 + 100 * rand;
+        prevLeftBallRow = rand;
         ballsArrLeft.push(new Ball(canvas.width-50, posY,'left'));
         previousTimeLeftBall = Date.now();
+    }
+    if(ballsArrUp.length < 4 && getDiffInTime(previousTimeUpBall) >= 1.5) {
+        do {
+            var rand = randomNumInRange(0,2)
+        } while(rand == prevUpBallRow);
+        var posX = canvas.width/2 - 50 * rand;
+        prevUpBallRow = rand;
+        ballsArrUp.push(new Ball(posX, canvas.height,'up'));
+        previousTimeUpBall = Date.now();
     }
 }
 
@@ -77,7 +93,18 @@ function tick() {
             collision.currentTime = 0;
             collision.play();
         }
+        ballsArrUp.forEach(function(ballUp){
+            if(ball.boundingBox.intersects(ballUp.boundingBox)) {
+                ballUp.position.y += ballUp.velocity;
+                collision.currentTime = 0;
+                collision.play();
+            }
+            //ballUp.update();
+
+        });
+
         ball.update();
+
     });
 
     ballsArrLeft.forEach(function(ball){
@@ -96,6 +123,39 @@ function tick() {
             collision.currentTime = 0;
             collision.play();
         }
+        ballsArrUp.forEach(function(ballUp){
+            if(ball.boundingBox.intersects(ballUp.boundingBox)) {
+                ballUp.position.y += ballUp.velocity;
+                collision.currentTime = 0;
+                collision.play();
+            }
+            //ballUp.update();
+        });
+
+        ball.update();
+    });
+
+
+    ballsArrUp.forEach(function(ball){
+        if(ball.position.y <= 0) {
+            ballsArrUp.removeAt(ballsArrUp.indexOf(ball));
+            generateBalls();
+        }
+
+        if(player1.boundingBox.intersects(ball.boundingBox)) {
+            //ball.velocityModifierY *= -1;
+            //collision.pause();
+            collision.currentTime = 0;
+            collision.play();
+        }
+
+        ballsArrLeft.forEach(function(ballLeft){
+            if(ball.boundingBox.intersects(ballLeft.boundingBox)) {
+                ballLeft.position.x += (ballLeft.velocity * 0.5);
+            }
+        });
+
+
         ball.update();
     });
 
@@ -105,11 +165,15 @@ function tick() {
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bcgImage,0,0,1330,610) // image,x,y,size
     player1.render(ctx);
     ballsArrRight.forEach(function(ball){
         ball.render(ctx);
     });
     ballsArrLeft.forEach(function(ball){
+        ball.render(ctx);
+    });
+    ballsArrUp.forEach(function(ball){
         ball.render(ctx);
     });
 
@@ -138,6 +202,9 @@ function modifyBallSpeed() {
         ballsArrLeft.forEach(function(ball){
             ball.velocityModifierX += 0.01;
         });
+        //ballsArrUp.forEach(function(ball){
+        //    ball.velocityModifierY += 0.01;
+        //});
 
     }
 }

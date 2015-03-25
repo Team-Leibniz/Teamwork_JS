@@ -6,14 +6,14 @@ var Ball = (function () {
         this.position = new Vector2(x, y);
         this.width = 29;
         this.height = 30;
-        this.velocity = 2;
+        this.velocity = 3;
         this.velocityModifierX = 1;
         this.velocityModifierY = 1;
         this.movement = {left: false, right : false, up: false, down : false};
         switch (movementPosition) {
             case 'right': this.movement.right = true; break;
             case 'left': this.movement.left = true; break;
-            //case 'up': this.movement = {up: true}; break;
+            case 'up': this.movement.up = true; break;
             //case 'down': this.movement = {down: true}; break;
             default : break;
         }
@@ -34,9 +34,9 @@ var Ball = (function () {
         //if(this.movement.down) {
         //    this.position.y += (this.velocity - 2) * this.velocityModifierY;
         //}
-        //if(this.movement.up) {
-        //    this.position.y -= ((this.velocity -2) * this.velocityModifierY);
-        //}
+        if(this.movement.up) {
+            this.position.y -= this.velocity;
+        }
 
         this.animation.position.set(this.position.x, this.position.y);
         this.boundingBox.x = this.position.x;
