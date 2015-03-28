@@ -20,6 +20,7 @@ var prevRightCarRow;
 var prevLeftCarRow;
 var prevUpCarRow;
 var isGameOver;
+var gameDofficulty = 1;
 
 //var animCoins = new Animation(35,55,0,0,6,
 //    'resources/coin_spritesheet.png',5,0,7);
@@ -35,7 +36,7 @@ function generatePrices() {
 
 function generateCars(){
 
-    if(carsArrRight.length < 55 && getDiffInTime(previousTimeRightCar) >= 0.5) {
+    if(carsArrRight.length < 55 && getDiffInTime(previousTimeRightCar) >= gameDofficulty) {
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevRightCarRow);
@@ -44,7 +45,7 @@ function generateCars(){
         carsArrRight.push(new Car(1, posY,'right'));
         previousTimeRightCar = Date.now();
     }
-    if(carsArrLeft.length < 55 && getDiffInTime(previousTimeLeftCar) >= 0.5) {
+    if(carsArrLeft.length < 55 && getDiffInTime(previousTimeLeftCar) >= gameDofficulty) {
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevLeftCarRow);
@@ -53,7 +54,7 @@ function generateCars(){
         carsArrLeft.push(new Car(canvas.width-50, posY,'left'));
         previousTimeLeftCar = Date.now();
     }
-    if(carsArrUp.length < 4 && getDiffInTime(previousTimeUpCar) >= 1.5) {
+    if(carsArrUp.length < 4 && getDiffInTime(previousTimeUpCar) >= gameDofficulty*1.5) {
         do {
             var rand = randomNumInRange(0,2)
         } while(rand == prevUpCarRow);
