@@ -58,4 +58,9 @@
 #game-over button {
     font-size: 1.5em;
     font-family: Lobster, sans-serif;
+    cursor: pointer;
+    border-radius: 6px;
+}
+#game-over button:hover {
+    border: 2px solid aqua;
 }
