@@ -1,16 +1,13 @@
 /**
  * Created by toshiba on 23.3.2015 г..
  */
+
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
-var bcgImage = new Image();
-bcgImage.src = "resources/roads.jpg";
 var previousTime = Date.now();
 var previousTimeRightBall = Date.now();
 var previousTimeLeftBall = Date.now();
 var previousTimeUpBall = Date.now();
-
-
 
 
 var input = new Input();
@@ -18,15 +15,28 @@ attachListeners(input);
 
 var player1 = new Player(canvas.width/4, 1,0);
 
-
 var ballsArrRight = [];
 var ballsArrLeft = [];
 var ballsArrUp = [];
-//generateBalls();
+var pricesArr = [];
 var prevRightBallRow;
 var prevLeftBallRow;
 var prevUpBallRow;
 
+//var animCoins = new Animation(35,55,0,0,6,
+//    'resources/coin_spritesheet.png',5,0,7);
+//animCoins.position.set(20,20);
+//animCoins.cropPostion.set(20,20);
+
+function generatePrices() {
+    var coinsPrice = new Animation(35,55,0,0,6,
+        'resources/coin_spritesheet.png',5,0,7);
+    var posX = randomNumInRange(20,canvas.width-coinsPrice.width);
+    var posY = randomNumInRange(20,canvas.height - coinsPrice.height)
+    coinsPrice.position.set(posX,posY);
+    coinsPrice.cropPostion.set(20,20);
+    pricesArr.push(coinsPrice);
+}
 
 function generateBalls(){
 
@@ -60,8 +70,10 @@ function generateBalls(){
 }
 
 
-// Initialise the collision sound
+// Initialise sounds
 var collision = document.getElementById("collide");
+var carHorn = document.getElementById("car-horn");
+
 
 
 
@@ -95,9 +107,9 @@ function tick() {
         }
         ballsArrUp.forEach(function(ballUp){
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
-                ballUp.position.y += ballUp.velocity;
-                collision.currentTime = 0;
-                collision.play();
+                ballUp.position.y += (ballUp.velocity + 1);
+                carHorn.currentTime = 0;
+                carHorn.play();
             }
             //ballUp.update();
 
@@ -125,9 +137,9 @@ function tick() {
         }
         ballsArrUp.forEach(function(ballUp){
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
-                ballUp.position.y += ballUp.velocity;
-                collision.currentTime = 0;
-                collision.play();
+                ballUp.position.y += (ballUp.velocity + 1);
+                carHorn.currentTime = 0;
+                carHorn.play();
             }
             //ballUp.update();
         });
@@ -158,14 +170,31 @@ function tick() {
 
         ball.update();
     });
+    //check for collision between player and price
+    //pricesArr.forEach(function(price){
+    //    if(price.boundingBox.intersects(player1.boundingBox)) {
+    //        player1.scores += 50;
+    //
+    //    }
+    //});
+
 
     player1.update();
+
+    //update prices
+    if(pricesArr.length < 1) {
+        generatePrices();
+    }
+    if(pricesArr.length > 0) {
+        pricesArr.forEach(function(price){
+            price.update()
+        });
+    }
 
 }
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(bcgImage,0,0,1330,610) // image,x,y,size
     player1.render(ctx);
     ballsArrRight.forEach(function(ball){
         ball.render(ctx);
@@ -177,6 +206,12 @@ function render(ctx) {
         ball.render(ctx);
     });
 
+    //draw prices
+    if(pricesArr.length > 0) {
+        pricesArr.forEach(function(price){
+            price.draw(ctx)
+        });
+    }
 }
 
 function movePlayer() {
