@@ -181,7 +181,6 @@ function tick() {
             pricesArr.removeAt(pricesArr.indexOf(price));
         }
     });
-
     player1.update();
 
     //update prices
