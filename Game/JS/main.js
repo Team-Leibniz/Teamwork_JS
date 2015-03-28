@@ -107,6 +107,7 @@ function tick() {
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
                 ballUp.position.y += (ballUp.velocity + 1);
                 carHorn.currentTime = 0;
+                carHorn.volume = 0.7;
                 carHorn.play();
             }
             //ballUp.update();
@@ -137,6 +138,7 @@ function tick() {
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
                 ballUp.position.y += (ballUp.velocity + 1);
                 carHorn.currentTime = 0;
+                carHorn.volume = 0.7;
                 carHorn.play();
             }
             //ballUp.update();
