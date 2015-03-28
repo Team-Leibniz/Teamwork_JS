@@ -303,7 +303,7 @@ var Rectangle = (function() {
 }());
 
 var Animation = (function() {
-    function Animation(width, height, row, column, limit, imgSrc, fps, columns, rows) {
+    function Animation(width, height, row, column, limit, imgSrc, fps, columns, rows, resize) {
         if(!fps || fps >=33) {
             this.fps = 1;
         } else {
@@ -320,6 +320,7 @@ var Animation = (function() {
         this.column = column;
         this.rows = rows;
         this.columns = columns;
+        this.resizeIndex = resize;
 
         if(!limit) {
             this.limit = Number.POSITIVE_INFINITY;
@@ -403,9 +404,10 @@ var Animation = (function() {
                 this.limitCount = 0;
             }
         }
+        //ctx.drawImage(carPic,0,0,238,72,400,400,238,72) //image,slice image(clipX,clipY,clipWidth,clipHeight),x,y,size
 
         ctx.drawImage(this.image, this.cropPostion.x, this.cropPostion.y, this.width, this.height,
-            this.position.x, this.position.y, this.width, this.height);
+            this.position.x, this.position.y, this.width/this.resizeIndex, this.height/this.resizeIndex);
 
         this.fpsCounter++;
 

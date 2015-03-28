@@ -17,10 +17,10 @@ var Ball = (function () {
             //case 'down': this.movement = {down: true}; break;
             default : break;
         }
+        this.resizeIndex = 1;
 
-
-        this.animation = new Animation(this.width, this.height, 0, 0, 1, 'resources/ball.PNG', 1, 1, 1);
-        this.boundingBox = new Rectangle(x, y, this.width, this.height);
+        this.animation = new Animation(this.width, this.height, 0, 0, 1, 'resources/ball.PNG', 1, 1, 1, this.resizeIndex);
+        this.boundingBox = new Rectangle(x, y, this.width/this.resizeIndex, this.height/this.resizeIndex);
     }
 
     Ball.prototype.update = function () {

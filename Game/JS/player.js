@@ -9,9 +9,10 @@ var Player = (function(){
         this.width = 128;
         this.height = 48;
         this.scores = 0;
+        this.resizeIndex = 2;
 
-        this.animation = new Animation( this.width, this.height, rowClip, 0, 1, 'resources/paddles.PNG', 1, 2, 1);
-        this.boundingBox = new Rectangle ( x, y, this.width, this.height)
+        this.animation = new Animation( this.width, this.height, rowClip, 0, 1, 'resources/paddles.PNG', 1, 2, 1, this.resizeIndex);
+        this.boundingBox = new Rectangle ( x, y, this.width/this.resizeIndex, this.height/this.resizeIndex)
     }
 
     Player.prototype.update = function() {
