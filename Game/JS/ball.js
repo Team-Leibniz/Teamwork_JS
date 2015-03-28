@@ -20,7 +20,7 @@ var Ball = (function () {
         this.resizeIndex = 1;
 
         this.animation = new Animation(this.width, this.height, 0, 0, 1, 'resources/ball.PNG', 1, 1, 1, this.resizeIndex);
-        this.boundingBox = new Rectangle(x, y, this.width/this.resizeIndex, this.height/this.resizeIndex);
+        this.boundingBox = new Rectangle(x, y, this.width/this.resizeIndex -5, this.height/this.resizeIndex);
     }
 
     Ball.prototype.update = function () {
