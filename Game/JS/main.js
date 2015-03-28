@@ -34,6 +34,7 @@ var collision = document.getElementById("collide");
 var carHorn1 = document.getElementById("car-horn1");
 var carHorn2 = document.getElementById("car-horn2");
 var carCrash = document.getElementById("car-crash");
+var coinSound = document.getElementById("coin-sound");
 
 
 
@@ -63,6 +64,7 @@ function tick() {
             //collision.pause();
             car.position.x -= (car.velocity + 1);
             if(!isGameOver){
+                isGameOver = true;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
                 //gameOver();
@@ -100,6 +102,7 @@ function tick() {
             //collision.pause();
             car.position.x += (car.velocity + 1);
             if(!isGameOver){
+                isGameOver = true;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
                 //gameOver();
@@ -132,6 +135,7 @@ function tick() {
             //collision.pause();
             car.position.y += (car.velocity + 1);
             if(!isGameOver){
+                isGameOver = true;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
                 //gameOver();
@@ -153,6 +157,8 @@ function tick() {
         if(price.boundingBox.intersects(player1.boundingBox)) {
             player1.scores += 50;
             pricesArr.removeAt(pricesArr.indexOf(price));
+            coinSound.volume = 1;
+            coinSound.play();
         }
     });
 
@@ -231,7 +237,7 @@ function gameOver() {
     player1.position.set(-30,-30);
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
-    isGameOver = true;
+    //isGameOver = true;
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
     });
