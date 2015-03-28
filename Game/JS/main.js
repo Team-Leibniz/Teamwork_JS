@@ -102,16 +102,16 @@ function tick() {
         if(player1.boundingBox.intersects(ball.boundingBox)) {
             //ball.velocityModifierY *= -1;
             //collision.pause();
-            collision.currentTime = 0;
-            collision.play();
             gameOver();
         }
         ballsArrUp.forEach(function(ballUp){
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
                 ballUp.position.y += (ballUp.velocity + 1);
-                carHorn1.currentTime = 0;
-                carHorn1.volume = 0.4;
-                carHorn1.play();
+                if(!isGameOver){
+                    carHorn1.currentTime = 0;
+                    carHorn1.volume = 0.4;
+                    carHorn1.play();
+                }
             }
             //ballUp.update();
 
@@ -134,16 +134,16 @@ function tick() {
         if(player1.boundingBox.intersects(ball.boundingBox)) {
             //ball.velocityModifierY *= -1;
             //collision.pause();
-            collision.currentTime = 0;
-            collision.play();
             gameOver();
         }
         ballsArrUp.forEach(function(ballUp){
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
                 ballUp.position.y += (ballUp.velocity + 1);
-                carHorn2.currentTime = 0;
-                carHorn2.volume = 0.4;
-                carHorn2.play();
+                if(!isGameOver){
+                    carHorn1.currentTime = 0;
+                    carHorn1.volume = 0.4;
+                    carHorn1.play();
+                }
             }
             //ballUp.update();
         });
@@ -161,8 +161,6 @@ function tick() {
         if(player1.boundingBox.intersects(ball.boundingBox)) {
             //ball.velocityModifierY *= -1;
             //collision.pause();
-            collision.currentTime = 0;
-            collision.play();
             gameOver();
         }
 
