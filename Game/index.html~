@@ -38,8 +38,8 @@
     <div id="menu">
         <span id="scores"></span>
     </div>
-    <canvas id="canvasBG" width="1330" height="700"></canvas>
-    <canvas id="canvas" width="1330" height="700" >
+    <canvas id="canvasBG" width="1330" height="610"></canvas>
+    <canvas id="canvas" width="1330" height="610" >
         Your browser does not support canvas.
     </canvas>
 </div>
