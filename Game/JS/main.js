@@ -36,6 +36,12 @@ var carHorn2 = document.getElementById("car-horn2");
 var carCrash = document.getElementById("car-crash");
 var coinSound = document.getElementById("coin-sound");
 
+var runOverPic = new Image();
+runOverPic.src = 'resources/runOver.jpg';
+ctx.drawImage(runOverPic,200,150); // image,x,y,size
+
+
+
 
 
 function update() {
@@ -65,6 +71,7 @@ function tick() {
             car.position.x -= (car.velocity + 1);
             if(!isGameOver){
                 isGameOver = true;
+                ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
                 //gameOver();
@@ -102,6 +109,7 @@ function tick() {
             //collision.pause();
             car.position.x += (car.velocity + 1);
             if(!isGameOver){
+                ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
                 isGameOver = true;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
@@ -134,7 +142,9 @@ function tick() {
             //car.velocityModifierY *= -1;
             //collision.pause();
             car.position.y += (car.velocity + 1);
+            ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
             if(!isGameOver){
+                ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
                 isGameOver = true;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
