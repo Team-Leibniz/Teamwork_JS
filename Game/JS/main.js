@@ -70,7 +70,8 @@ function generateBalls(){
 
 // Initialise sounds
 var collision = document.getElementById("collide");
-var carHorn = document.getElementById("car-horn");
+var carHorn1 = document.getElementById("car-horn1");
+var carHorn2 = document.getElementById("car-horn2");
 
 
 
@@ -106,9 +107,9 @@ function tick() {
         ballsArrUp.forEach(function(ballUp){
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
                 ballUp.position.y += (ballUp.velocity + 1);
-                carHorn.currentTime = 0;
-                carHorn.volume = 0.7;
-                carHorn.play();
+                carHorn1.currentTime = 0;
+                carHorn1.volume = 0.4;
+                carHorn1.play();
             }
             //ballUp.update();
 
@@ -137,9 +138,9 @@ function tick() {
         ballsArrUp.forEach(function(ballUp){
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
                 ballUp.position.y += (ballUp.velocity + 1);
-                carHorn.currentTime = 0;
-                carHorn.volume = 0.7;
-                carHorn.play();
+                carHorn2.currentTime = 0;
+                carHorn2.volume = 0.4;
+                carHorn2.play();
             }
             //ballUp.update();
         });
