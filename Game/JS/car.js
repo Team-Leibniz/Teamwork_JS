@@ -1,8 +1,8 @@
 var Car = (function () {
     function Car(x, y, movementPosition) {
         this.position = new Vector2(x, y);
-        this.width = 35;
-        this.height = 17;
+        this.width = 36;
+        this.height = 18;
         this.velocity = 3;
         this.velocityModifierX = 1;
         this.velocityModifierY = 1;
@@ -16,7 +16,16 @@ var Car = (function () {
         }
         this.resizeIndex = 1;
 
-        this.animation = new Animation(this.width, this.height, 0, 0, 1, 'resources/cars-right.png', 1, 1, 1, this.resizeIndex);
+        var rowCars = randomCar(7),
+            colCars = randomCar(19);
+        this.animation = new Animation(this.width, this.height, rowCars, colCars, 1, 'resources/cars-right.png', 1, 1, 1, this.resizeIndex);
+
+        function randomCar(position) {
+            var randCar =  Math.floor(Math.random() * position);
+            return randCar;
+        }
+
+        //this.animation = new Animation(this.width, this.height, 0, 0, 1, 'resources/cars-right.png', 1, 1, 1, this.resizeIndex);
         this.boundingBox = new Rectangle(x, y, this.width/this.resizeIndex, this.height/this.resizeIndex);
     }
 
