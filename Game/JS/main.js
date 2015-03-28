@@ -19,6 +19,7 @@ var ballsArrRight = [];
 var ballsArrLeft = [];
 var ballsArrUp = [];
 var pricesArr = [];
+var positionY = [24,46,68,121,143,165,260,285,307,363,387,411,504,530,555,615,640,665];
 var prevRightBallRow;
 var prevLeftBallRow;
 var prevUpBallRow;
@@ -40,11 +41,11 @@ function generatePrices() {
 
 function generateBalls(){
 
-    if(ballsArrRight.length < 5 && getDiffInTime(previousTimeRightBall) >= 1) {
+    if(ballsArrRight.length < 55 && getDiffInTime(previousTimeRightBall) >= 1) {
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevRightBallRow);
-        var posY = 50 + 100 * rand;
+        var posY = positionY[Math.floor(Math.random()*positionY.length)];
         prevRightBallRow = rand;
         ballsArrRight.push(new Ball(1, posY,'right'));
         previousTimeRightBall = Date.now();
@@ -53,7 +54,7 @@ function generateBalls(){
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevLeftBallRow);
-        var posY = 100 + 100 * rand;
+        var posY = positionY[Math.floor(Math.random()*positionY.length)];
         prevLeftBallRow = rand;
         ballsArrLeft.push(new Ball(canvas.width-50, posY,'left'));
         previousTimeLeftBall = Date.now();
