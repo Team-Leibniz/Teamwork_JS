@@ -23,6 +23,7 @@ var positionY = [24,46,68,121,143,165,260,285,307,363,387,411,504,530,555,615,64
 var prevRightBallRow;
 var prevLeftBallRow;
 var prevUpBallRow;
+var isGameOver;
 
 //var animCoins = new Animation(35,55,0,0,6,
 //    'resources/coin_spritesheet.png',5,0,7);
@@ -102,6 +103,7 @@ function tick() {
             //collision.pause();
             collision.currentTime = 0;
             collision.play();
+            gameOver();
         }
         ballsArrUp.forEach(function(ballUp){
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
@@ -133,6 +135,7 @@ function tick() {
             //collision.pause();
             collision.currentTime = 0;
             collision.play();
+            gameOver();
         }
         ballsArrUp.forEach(function(ballUp){
             if(ball.boundingBox.intersects(ballUp.boundingBox)) {
@@ -159,6 +162,7 @@ function tick() {
             //collision.pause();
             collision.currentTime = 0;
             collision.play();
+            gameOver();
         }
 
         ballsArrLeft.forEach(function(ballLeft){
@@ -197,7 +201,9 @@ function tick() {
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player1.render(ctx);
+    if(!isGameOver){
+        player1.render(ctx);
+    }
     ballsArrRight.forEach(function(ball){
         ball.render(ctx);
     });
@@ -245,37 +251,29 @@ function modifyBallSpeed() {
 
     }
 }
-//function refresh(){
-//    var startRange = 100;
-//    var endRange = canvas.height - startRange;
-//    var startX = Math.floor(Math.random() * canvas.width);
-//    var startY = Math.floor(Math.random() * (endRange - startRange +1)) + startRange;
-//    ball.position.x = startX;
-//    ball.position.y = startY;
-//    ball.movement.left = false;
-//    ball.movement.right = false;
-//    ball.movement.down = false;
-//    ball.movement.up = false;
-//    ball.velocityModifierX = 1;
-//    ball.velocityModifierY = 1;
-//    if(startY < canvas.height/2) {
-//        ball.movement.down = true;
-//        var rand = Math.floor(Math.random() * 2);
-//        if(rand === 1) {
-//            ball.movement.left = true;
-//        }else {
-//            ball.movement.right = true;
-//        }
-//    } else {
-//        ball.movement.up = true;
-//        var rand = Math.floor(Math.random() * 2);
-//        if(rand === 1) {
-//            ball.movement.left = true;
-//        }else {
-//            ball.movement.right = true;
-//        }
-//    }
-//}
+function gameOver() {
+    document.getElementById('game-over').style.display = 'block';
+    document.getElementById('game-over-overlay').style.display = 'block';
+    isGameOver = true;
+    document.getElementById('play-again').addEventListener('click', function() {
+        reset();
+    });
+}
+
+function reset() {
+    document.getElementById('game-over').style.display = 'none';
+    document.getElementById('game-over-overlay').style.display = 'none';
+    isGameOver = false;
+
+    ballsArrRight = [];
+    ballsArrLeft = [];
+    ballsArrUp = [];
+    pricesArr = [];
+    player1.scores = 0;
+
+    player1.position.x = randomNumInRange(0, canvas.width-player1.width);
+    player1.position.y = randomNumInRange(0, canvas.height-player1.height);
+}
 
 function randomNumInRange(min,max) {
    var randNum =  Math.floor(Math.random() * (max - min +1)) + min;
