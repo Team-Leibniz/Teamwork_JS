@@ -19,6 +19,7 @@ var ballsArrRight = [];
 var ballsArrLeft = [];
 var ballsArrUp = [];
 var pricesArr = [];
+var positionY = [24,46,68,121,143,165,260,285,307,363,387,411,504,530,555,615,640,665];
 var prevRightBallRow;
 var prevLeftBallRow;
 var prevUpBallRow;
@@ -29,33 +30,36 @@ var prevUpBallRow;
 //animCoins.cropPostion.set(20,20);
 
 function generatePrices() {
-    var posX = randomNumInRange(20,canvas.width -50);
-    var posY = randomNumInRange(20,canvas.height - 50)
-    var price = new Price(posX,posY);
-    pricesArr.push(price);
+    var coinsPrice = new Animation(35,55,0,0,6,
+        'resources/coin_spritesheet.png',5,0,7);
+    var posX = randomNumInRange(20,canvas.width-coinsPrice.width);
+    var posY = randomNumInRange(20,canvas.height - coinsPrice.height)
+    coinsPrice.position.set(posX,posY);
+    coinsPrice.cropPostion.set(20,20);
+    pricesArr.push(coinsPrice);
 }
 
 function generateBalls(){
 
-    if(ballsArrRight.length < 5 && getDiffInTime(previousTimeRightBall) >= 0.5) {
+    if(ballsArrRight.length < 55 && getDiffInTime(previousTimeRightBall) >= 1) {
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevRightBallRow);
-        var posY = 50 + 100 * rand;
+        var posY = positionY[Math.floor(Math.random()*positionY.length)];
         prevRightBallRow = rand;
         ballsArrRight.push(new Ball(1, posY,'right'));
         previousTimeRightBall = Date.now();
     }
-    if(ballsArrLeft.length < 5 && getDiffInTime(previousTimeLeftBall) >= 0.5) {
+    if(ballsArrLeft.length < 5 && getDiffInTime(previousTimeLeftBall) >= 1) {
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevLeftBallRow);
-        var posY = 100 + 100 * rand;
+        var posY = positionY[Math.floor(Math.random()*positionY.length)];
         prevLeftBallRow = rand;
         ballsArrLeft.push(new Ball(canvas.width-50, posY,'left'));
         previousTimeLeftBall = Date.now();
     }
-    if(ballsArrUp.length < 4 && getDiffInTime(previousTimeUpBall) >= 1) {
+    if(ballsArrUp.length < 4 && getDiffInTime(previousTimeUpBall) >= 1.5) {
         do {
             var rand = randomNumInRange(0,2)
         } while(rand == prevUpBallRow);
@@ -168,12 +172,12 @@ function tick() {
         ball.update();
     });
     //check for collision between player and price
-    pricesArr.forEach(function(price){
-        if(price.boundingBox.intersects(player1.boundingBox)) {
-            player1.scores += 50;
-            pricesArr.removeAt(pricesArr.indexOf(price));
-        }
-    });
+    //pricesArr.forEach(function(price){
+    //    if(price.boundingBox.intersects(player1.boundingBox)) {
+    //        player1.scores += 50;
+    //
+    //    }
+    //});
 
 
     player1.update();
@@ -187,7 +191,6 @@ function tick() {
             price.update()
         });
     }
-    document.getElementById('scores').innerText = 'Scores: ' + player1.scores;
 
 }
 
@@ -206,11 +209,10 @@ function render(ctx) {
 
     //draw prices
     if(pricesArr.length > 0) {
-        pricesArr.forEach(function(elem){
-            elem.render(ctx);
+        pricesArr.forEach(function(price){
+            price.draw(ctx)
         });
     }
-
 }
 
 function movePlayer() {
