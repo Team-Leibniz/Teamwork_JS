@@ -78,6 +78,7 @@ function tick() {
     modifyCarSpeed();
     if(isBombDeployed && (player1.bomb > 0)) {
         deployBomb(player1.position.x, player1.position.y,Date.now());
+        prevBombGenTime = Date.now();
         player1.bomb--;
         isBombDeployed = false;
     }
@@ -224,9 +225,9 @@ function tick() {
         });
     }
     //update bomb price
-    if((bombArr.length < 1) && (player1.bomb < 1 ) && (getDiffInTime(prevBombGenTime) >= 5 )) {
+    if((bombArr.length < 1) && (player1.bomb < 1 ) && (getDiffInTime(prevBombGenTime) >= 10 )) {
         generatePrices('bomb');
-        prevBombGenTime = Date.now();
+        //prevBombGenTime = Date.now();
     }
     //if((bombArr.length < 1) && (getDiffInTime(prevBombGenTime) >= 5 )) {
     //    generatePrices('bomb');
