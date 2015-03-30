@@ -12,6 +12,12 @@
     <div id="new-game">
         <h1>ROAD RAGE</h1>
         <img src="resources/grandmadriver.jpg" alt=""/>
+        <div class="difficulty-buttons">
+            <button class="difficulty" id="difficulty1" onclick="setGameDifficulty(3)">Easy</button>
+            <button class="difficulty" id="difficulty2" onclick="setGameDifficulty(1.5)">Medium</button>
+            <button class="difficulty" id="difficulty3" onclick="setGameDifficulty(1)">Hard</button>
+            <button class="difficulty" id="difficulty4" onclick="setGameDifficulty(0.5)">Hardcore</button>
+        </div>
         <button id="hide">Start new game</button>
     </div>
     <div id="game-over-overlay">
@@ -33,9 +39,6 @@
     <audio preload="true" id="car-horn1">
         <source src="resources/vehicleHorn.wav" />
     </audio>
-    <audio preload="true" id="car-horn2">
-        <source src="resources/vehicleHorn_1.wav" />
-    </audio>
     <audio preload="true" id="car-crash">
         <source src="resources/crashSound.wav" />
     </audio>
@@ -44,10 +47,6 @@
     </audio>
     <audio preload="true" id="explosion">
         <source src="resources/explosion.wav" />
-    </audio>
-    <audio preload="true" id="collide">
-        <source src="http://dl.dropbox.com/u/26141789/canvas/pingpong/Metal%20Cling%20-%20Hit.mp3" />
-        <source src="http://dl.dropbox.com/u/26141789/canvas/pingpong/Metal%20Cling%20-%20Hit.wav" />
     </audio>
     <div id="menu">
         <span id="scores"></span>

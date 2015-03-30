@@ -5,7 +5,6 @@ var previousTimeRightCar = Date.now();
 var previousTimeLeftCar = Date.now();
 var previousTimeUpCar = Date.now();
 
-
 var input = new Input();
 attachListeners(input);
 
@@ -21,12 +20,18 @@ var prevRightCarRow;
 var prevLeftCarRow;
 var prevUpCarRow;
 var isGameOver = true;
-var gameDofficulty = 2;
+var gameDifficulty = 2;
 var bombArr = [];
 var deployedBombs = [];
 var explosionsArr = [];
 var prevBombGenTime = Date.now();
 var isBombDeployed = false;
+
+
+
+
+
+
 
 button.onclick = function() {
     var div = document.getElementById('new-game');
@@ -40,17 +45,12 @@ button.onclick = function() {
     }
 };
 
-//var animCoins = new Animation(35,55,0,0,6,
-//    'resources/coin_spritesheet.png',5,0,7);
-//animCoins.position.set(20,20);
-//animCoins.cropPostion.set(20,20);
 
 
 
 // Initialise sounds
-var collision = document.getElementById("collide");
+
 var carHorn1 = document.getElementById("car-horn1");
-var carHorn2 = document.getElementById("car-horn2");
 var carCrash = document.getElementById("car-crash");
 var coinSound = document.getElementById("coin-sound");
 var explosionSound = document.getElementById("explosion");
@@ -83,26 +83,20 @@ function tick() {
         isBombDeployed = false;
     }
 
+    //check for collision between cars and player. Delete cars after leaving canvas and make new car in the beginning of the canvas scene
     carsArrRight.forEach(function(car){
-        //if(car.position.x +  car.width >= canvas.width || car.position.x <= 0) {
-        //    car.velocityModifierX *= -1;
-        //}
         if(car.position.x +  car.width >= canvas.width) {
-            //car.position.x = 1;
             carsArrRight.removeAt(carsArrRight.indexOf(car));
-            generateCars();
+            generateCars()
         }
 
         if(player1.boundingBox.intersects(car.boundingBox)) {
-            //car.velocityModifierY *= -1;
-            //collision.pause();
             car.position.x -= (car.velocity + 1);
             if(!isGameOver){
                 isGameOver = true;
                 ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
-                //gameOver();
             }
         }
         carsArrUp.forEach(function(carUp){
@@ -115,33 +109,23 @@ function tick() {
                 }
             }
             //carUp.update();
-
         });
-
         car.update();
-
     });
 
     carsArrLeft.forEach(function(car){
-        //if(car.position.x +  car.width >= canvas.width || car.position.x <= 0) {
-        //    car.velocityModifierX *= -1;
-        //}
         if(car.position.x <= 0) {
-            //car.position.x = 1;
             carsArrLeft.removeAt(carsArrLeft.indexOf(car));
             generateCars();
         }
 
         if(player1.boundingBox.intersects(car.boundingBox)) {
-            //car.velocityModifierY *= -1;
-            //collision.pause();
             car.position.x += (car.velocity + 1);
             if(!isGameOver){
                 ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
                 isGameOver = true;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
-                //gameOver();
             }
         }
         carsArrUp.forEach(function(carUp){
@@ -155,7 +139,6 @@ function tick() {
             }
             //carUp.update();
         });
-
         car.update();
     });
 
@@ -167,8 +150,6 @@ function tick() {
         }
 
         if(player1.boundingBox.intersects(car.boundingBox)) {
-            //car.velocityModifierY *= -1;
-            //collision.pause();
             car.position.y += (car.velocity + 1);
             ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
             if(!isGameOver){
@@ -176,7 +157,6 @@ function tick() {
                 isGameOver = true;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
-                //gameOver();
             }
         }
 
@@ -185,8 +165,6 @@ function tick() {
                 carLeft.position.x += (carLeft.velocity * 0.5);
             }
         });
-
-
         car.update();
     });
 
@@ -224,15 +202,11 @@ function tick() {
             price.update()
         });
     }
+
     //update bomb price
     if((bombArr.length < 1) && (player1.bomb < 1 ) && (getDiffInTime(prevBombGenTime) >= 10 )) {
         generatePrices('bomb');
-        //prevBombGenTime = Date.now();
     }
-    //if((bombArr.length < 1) && (getDiffInTime(prevBombGenTime) >= 5 )) {
-    //    generatePrices('bomb');
-    //    prevBombGenTime = Date.now();
-    //}
 
     if(bombArr.length > 0) {
         bombArr.forEach(function(price){
@@ -240,10 +214,13 @@ function tick() {
         });
     }
 
+
     //update deployed bomb
     if(deployedBombs.length > 0) {
         deployedBombs.forEach(function(bomb){
             bomb.count ++ ;
+
+            //bomb explode
             if(bomb.count > 200) {
                 explosionSound.currentTime = 0;
                 explosionSound.volume = 1;
@@ -251,9 +228,8 @@ function tick() {
                 deployedExplosion(bomb.position.x,bomb.position.y,Date.now());
                 deployedBombs.removeAt(deployedBombs.indexOf(bomb));
 
+                //check if explosion interact with something
                 if(bomb.boundingBox.intersects(player1.boundingBox)) {
-                    //deployedExplosion(car.position.x,car.position.y,Date.now());
-                    //player1.scores += 50;
                     isGameOver = true;
                     var timeOut = setTimeout(gameOver,100);
                 }
@@ -281,7 +257,6 @@ function tick() {
                         player1.scores += 50;
                     }
                 });
-
             }
             bomb.update()
         });
@@ -301,16 +276,18 @@ function tick() {
     player1.update();
     document.getElementById('scores').innerText = 'Scores: ' + player1.scores;
     document.getElementById('bombs-quantity').innerText = 'Bombs: ' + player1.bomb;
-
-
 }
+
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //draw player
     if(!isGameOver){
         player1.render(ctx);
         ctx.strokeRect(player1.boundingBox.x, player1.boundingBox.y, player1.boundingBox.width, player1.boundingBox.height);
     }
+
+    //draw cars
     carsArrRight.forEach(function(car){
         car.render(ctx);
         ctx.strokeRect(car.position.x,car.position.y,car.width,car.height);
@@ -332,6 +309,7 @@ function render(ctx) {
             ctx.strokeRect(elem.position.x,elem.position.y,elem.width,elem.height);
         });
     }
+
     //draw bomb price
     if(bombArr.length > 0) {
         bombArr.forEach(function(elem){
@@ -363,6 +341,7 @@ function movePlayer() {
     player1.movement.down = !!input.down;
     isBombDeployed = !!input.b;
 }
+
 function getDiffInTime (prevTime) {
     var now = Date.now();
     var difference = (Math.abs(now - prevTime) / 1000);
@@ -375,13 +354,13 @@ function modifyCarSpeed() {
     if(difference >= 10) {
         previousTime = now;
         carsArrRight.forEach(function(car){
-            car.velocityModifierX += 0.01;
+            car.velocityModifierX += 0.1;
         });
         carsArrLeft.forEach(function(car){
-            car.velocityModifierX += 0.01;
+            car.velocityModifierX += 0.1;
         });
         carsArrUp.forEach(function(car){
-            car.velocityModifierY += 0.01;
+            car.velocityModifierY += 0.1;
         });
 
     }
@@ -400,7 +379,6 @@ function reset() {
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('game-over-overlay').style.display = 'none';
     isGameOver = false;
-
     carsArrRight = [];
     carsArrLeft = [];
     carsArrUp = [];

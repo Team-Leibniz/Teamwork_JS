@@ -1,6 +1,7 @@
 /**
  * Created by toshiba on 30.3.2015 г..
  */
+    //this ""class" deploys bombs and explosions in canvas scene
 var DepBombs = (function () {
     function DepBombs(x, y, bombDeployTime, name) {
         this.type = name;
@@ -23,9 +24,6 @@ var DepBombs = (function () {
                 break;
             default : break;
         }
-        //this.animation = new Animation(this.width,this.height,0,0,32,
-        //    'resources/gold_coin.png',12,0,0,this.resizeIndex);
-        //this.boundingBox = new Rectangle(x, y, this.width/this.resizeIndex, this.height/this.resizeIndex);
     }
 
     DepBombs.prototype.update = function () {

@@ -14,15 +14,10 @@ var Price = (function () {
                 break;
             case 'bomb':
                 this.animation = new Animation( 81, 81, 4, 0, 8, 'resources/bombPrice.png', 5, 8, 4, this.resizeIndex-1);
-                //this.animation = new Animation(75,75,0,0,48,
-                //'resources/bomb.png',12,0,0,this.resizeIndex);
                 this.boundingBox = new Rectangle(x, y, 75/this.resizeIndex, 75/this.resizeIndex);
                 break;
             default : break;
         }
-        //this.animation = new Animation(this.width,this.height,0,0,32,
-        //    'resources/gold_coin.png',12,0,0,this.resizeIndex);
-        //this.boundingBox = new Rectangle(x, y, this.width/this.resizeIndex, this.height/this.resizeIndex);
     }
 
     Price.prototype.update = function () {

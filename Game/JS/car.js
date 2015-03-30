@@ -39,7 +39,6 @@ var Car = (function () {
         if(this.movement.left ) {
             this.position.x -= (this.velocity * this.velocityModifierX);
         }
-
         //if(this.movement.down) {
         //    this.position.y += (this.velocity - 2) * this.velocityModifierY;
         //}
