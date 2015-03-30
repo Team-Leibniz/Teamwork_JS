@@ -78,6 +78,7 @@ function tick() {
     modifyCarSpeed();
     if(isBombDeployed && (player1.bomb > 0)) {
         deployBomb(player1.position.x, player1.position.y,Date.now());
+        player1.bomb--;
         isBombDeployed = false;
     }
 
@@ -248,6 +249,38 @@ function tick() {
                 explosionSound.play();
                 deployedExplosion(bomb.position.x,bomb.position.y,Date.now());
                 deployedBombs.removeAt(deployedBombs.indexOf(bomb));
+
+                if(bomb.boundingBox.intersects(player1.boundingBox)) {
+                    //deployedExplosion(car.position.x,car.position.y,Date.now());
+                    //player1.scores += 50;
+                    isGameOver = true;
+                    var timeOut = setTimeout(gameOver,100);
+                }
+
+                carsArrRight.forEach(function(car){
+                    if(bomb.boundingBox.intersects(car.boundingBox)) {
+                        deployedExplosion(car.position.x,car.position.y,Date.now());
+                        carsArrRight.removeAt(carsArrRight.indexOf(car));
+                        player1.scores += 50;
+                    }
+                });
+
+                carsArrLeft.forEach(function(car){
+                    if(bomb.boundingBox.intersects(car.boundingBox)) {
+                        deployedExplosion(car.position.x,car.position.y,Date.now());
+                        carsArrLeft.removeAt(carsArrLeft.indexOf(car));
+                        player1.scores += 50;
+
+                    }
+                });
+                carsArrUp.forEach(function(car){
+                    if(bomb.boundingBox.intersects(car.boundingBox)) {
+                        deployedExplosion(car.position.x,car.position.y,Date.now());
+                        carsArrUp.removeAt(carsArrUp.indexOf(car));
+                        player1.scores += 50;
+                    }
+                });
+
             }
             bomb.update()
         });
@@ -257,8 +290,8 @@ function tick() {
     if(explosionsArr.length > 0) {
         explosionsArr.forEach(function(explosion){
             explosion.count ++ ;
-            if(explosion.count > 100) {
-                explosionsArr.removeAt(explosion.indexOf(explosion));
+            if(explosion.count > 70) {
+                explosionsArr.removeAt(explosionsArr.indexOf(explosion));
             }
             explosion.update()
         });
@@ -275,6 +308,7 @@ function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if(!isGameOver){
         player1.render(ctx);
+        ctx.strokeRect(player1.boundingBox.x, player1.boundingBox.y, player1.boundingBox.width, player1.boundingBox.height);
     }
     carsArrRight.forEach(function(car){
         car.render(ctx);
@@ -305,6 +339,7 @@ function render(ctx) {
     if(deployedBombs.length > 0) {
         deployedBombs.forEach(function(bomb){
             bomb.render(ctx);
+            ctx.strokeRect(bomb.boundingBox.x, bomb.boundingBox.y, bomb.boundingBox.width, bomb.boundingBox.height);
         });
     }
 

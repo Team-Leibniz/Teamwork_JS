@@ -11,9 +11,11 @@ var Player = (function(){
         this.scores = 0;
         this.bomb = 0;
         this.resizeIndex = 2.7;
+        var posX = x-100;
+        var posY = y-100;
 
         this.animation = new Animation( this.width, this.height, 0, 0, 1, 'resources/player.png', 1, 1, 0, this.resizeIndex);
-        this.boundingBox = new Rectangle ( x, y, this.width/this.resizeIndex -5, this.height/this.resizeIndex-5);
+        this.boundingBox = new Rectangle (posX, posY, this.width/this.resizeIndex -5, (this.height/this.resizeIndex)-10);
     }
 
     Player.prototype.update = function() {
