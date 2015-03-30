@@ -18,7 +18,7 @@ function generatePrices(type) {
 }
 
 function deployBomb(posX,posY,bombDeployTime) {
-    var bomb = new DepBombs(posX,posY,bombDeployTime,'bomb');
+    var bomb = new DepBombs(posX,posY,bombDeployTime,'depBomb');
     //var bomb = new Price(posX,posY,'money');
 
     deployedBombs.push(bomb);
