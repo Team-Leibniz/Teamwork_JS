@@ -14,7 +14,7 @@
     height: 40px;
     background-color: #666362;
 }
-#scores {
+#scores, #bombs-quantity {
     font-family: Lobster, sans-serif;
     line-height: 40px;
     font-size: 25px;

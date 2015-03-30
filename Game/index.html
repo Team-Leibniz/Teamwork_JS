@@ -37,12 +37,16 @@
     <audio preload="true" id="coin-sound">
         <source src="resources/coin.wav" />
     </audio>
+    <audio preload="true" id="explosion">
+        <source src="resources/explosion.wav" />
+    </audio>
     <audio preload="true" id="collide">
         <source src="http://dl.dropbox.com/u/26141789/canvas/pingpong/Metal%20Cling%20-%20Hit.mp3" />
         <source src="http://dl.dropbox.com/u/26141789/canvas/pingpong/Metal%20Cling%20-%20Hit.wav" />
     </audio>
     <div id="menu">
         <span id="scores"></span>
+        <span id="bombs-quantity"></span>
     </div>
     <canvas id="canvasBG" width="1330" height="700"></canvas>
     <canvas id="canvas" width="1330" height="700" >
@@ -53,7 +57,7 @@
 <script src="JS/car.js"></script>
 <script src="JS/price.js"></script>
 <script src="JS/generateElements.js"></script>
-
+<script src="JS/deployedBomb.js"></script>
 <script src="JS/main.js"></script>
 </body>
 </html>

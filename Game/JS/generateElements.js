@@ -6,13 +6,29 @@ function generatePlayer() {
     var player1 = new Player(canvas.width/4, 1,0);
     return player1
 }
-function generatePrices() {
+function generatePrices(type) {
     var posX = randomNumInRange(20,canvas.width -50);
     var posY = randomNumInRange(20,canvas.height - 50)
-    var price = new Price(posX,posY);
-    pricesArr.push(price);
+    var price = new Price(posX,posY,type);
+    switch (type) {
+        case 'money' : moneyArr.push(price); break
+        case 'bomb' : bombArr.push(price); break;
+        default : break;
+    }
 }
 
+function deployBomb(posX,posY,bombDeployTime) {
+    var bomb = new DepBombs(posX,posY,bombDeployTime,'bomb');
+    //var bomb = new Price(posX,posY,'money');
+
+    deployedBombs.push(bomb);
+}
+function deployedExplosion(posX,posY,explDeployTime) {
+    var explosion = new DepBombs(posX,posY,explDeployTime,'explosion');
+    //var bomb = new Price(posX,posY,'money');
+
+    explosionsArr.push(explosion);
+}
 
 
 function generateCars(){

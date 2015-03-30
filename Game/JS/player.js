@@ -9,6 +9,7 @@ var Player = (function(){
         this.width = 95;
         this.height = 159;
         this.scores = 0;
+        this.bomb = 0;
         this.resizeIndex = 2.7;
 
         this.animation = new Animation( this.width, this.height, 0, 0, 1, 'resources/player.png', 1, 1, 0, this.resizeIndex);
