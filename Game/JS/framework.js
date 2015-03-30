@@ -584,6 +584,22 @@ function attachListeners(input) {
         }
     };
 
+    //document.documentElement.onkeypress = function (e) {
+    //    var keycode;
+    //    if (window.event)
+    //        keycode = window.event.keyCode;
+    //    else if (e)
+    //        keycode = e.which;
+    //
+    //    switch (keycode) {
+    //        case 32:
+    //            input.space = true;
+    //            break;
+    //
+    //    }
+    //};
+
+
     document.documentElement.onkeyup = function (e) {
         var keycode;
         if (window.event)

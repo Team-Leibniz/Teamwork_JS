@@ -22,10 +22,16 @@ var prevUpCarRow;
 var isGameOver = true;
 var gameDifficulty = 2;
 var bombArr = [];
+var rpgArr = [];
 var deployedBombs = [];
+var deployedRpg = [];
 var explosionsArr = [];
 var prevBombGenTime = Date.now();
+var prevRpgGenTime = Date.now();
+var prevRpgShooted = Date.now();
 var isBombDeployed = false;
+var isRgpDeployed = false;
+var movement;
 
 
 
@@ -83,11 +89,18 @@ function tick() {
         isBombDeployed = false;
     }
 
+    if(isRgpDeployed && (player1.rpg > 0) && getDiffInTime(prevRpgShooted) > 1) {
+        deployRpg(player1.position.x, player1.position.y,Date.now(),movement);
+        prevRpgShooted = Date.now();
+        player1.rpg--;
+        isRgpDeployed = false;
+    }
+
     //check for collision between cars and player. Delete cars after leaving canvas and make new car in the beginning of the canvas scene
     carsArrRight.forEach(function(car){
         if(car.position.x +  car.width >= canvas.width) {
             carsArrRight.removeAt(carsArrRight.indexOf(car));
-            generateCars()
+            generateCars();
         }
 
         if(player1.boundingBox.intersects(car.boundingBox)) {
@@ -109,6 +122,16 @@ function tick() {
                 }
             }
             //carUp.update();
+        });
+        deployedRpg.forEach(function(rpg){
+            if(car.boundingBox.intersects(rpg.boundingBox)){
+                deployedExplosion(car.position.x,car.position.y,Date.now());
+                carsArrRight.removeAt(carsArrRight.indexOf(car));
+                deployedRpg.removeAt(deployedRpg.indexOf(rpg));
+                explosionSound.volume = 1;
+                explosionSound.play();
+                player1.scores += 50;
+            }
         });
         car.update();
     });
@@ -139,6 +162,16 @@ function tick() {
             }
             //carUp.update();
         });
+        deployedRpg.forEach(function(rpg){
+            if(car.boundingBox.intersects(rpg.boundingBox)){
+                deployedExplosion(car.position.x,car.position.y,Date.now());
+                carsArrLeft.removeAt(carsArrLeft.indexOf(car));
+                deployedRpg.removeAt(deployedRpg.indexOf(rpg));
+                explosionSound.volume = 1;
+                explosionSound.play();
+                player1.scores += 50;
+            }
+        });
         car.update();
     });
 
@@ -165,7 +198,30 @@ function tick() {
                 carLeft.position.x += (carLeft.velocity * 0.5);
             }
         });
+        deployedRpg.forEach(function(rpg){
+            if(car.boundingBox.intersects(rpg.boundingBox)){
+                deployedExplosion(car.position.x,car.position.y,Date.now());
+                carsArrUp.removeAt(carsArrUp.indexOf(car));
+                deployedRpg.removeAt(deployedRpg.indexOf(rpg));
+                explosionSound.volume = 1;
+                explosionSound.play();
+                player1.scores += 50;
+            }
+        });
         car.update();
+    });
+
+    deployedRpg.forEach(function(rpg){
+        if(rpg.position.x >= canvas.width) {
+            deployedRpg.removeAt(deployedRpg.indexOf(rpg));
+        } else if (rpg.position.y >= canvas.height) {
+            deployedRpg.removeAt(deployedRpg.indexOf(rpg));
+        } else if (rpg.position.x < 0) {
+            deployedRpg.removeAt(deployedRpg.indexOf(rpg));
+        } else if (rpg.position.y < 0) {
+            deployedRpg.removeAt(deployedRpg.indexOf(rpg));
+        }
+        rpg.update();
     });
 
     //check for collision between player and money price
@@ -186,6 +242,17 @@ function tick() {
             if(price.boundingBox.intersects(player1.boundingBox)) {
                 player1.bomb ++;
                 bombArr.removeAt(moneyArr.indexOf(price));
+
+            }
+        });
+    }
+
+    //check for collision between player and rpg price
+    if(rpgArr.length > 0) {
+        rpgArr.forEach(function(price){
+            if(price.boundingBox.intersects(player1.boundingBox)) {
+                player1.rpg ++;
+                rpgArr.removeAt(rpgArr.indexOf(price));
 
             }
         });
@@ -213,6 +280,19 @@ function tick() {
             price.update()
         });
     }
+
+    //update rpg price
+    if((rpgArr.length < 1) && (player1.rpg < 5 ) && (getDiffInTime(prevRpgGenTime) >= randomNumInRange(15,55))) {
+        generatePrices('rpg');
+        prevRpgGenTime = Date.now();
+    }
+    if(rpgArr.length > 0) {
+        rpgArr.forEach(function(price){
+            price.update()
+        });
+    }
+
+
 
 
     //update deployed bomb
@@ -276,6 +356,9 @@ function tick() {
     player1.update();
     document.getElementById('scores').innerText = 'Scores: ' + player1.scores;
     document.getElementById('bombs-quantity').innerText = 'Bombs: ' + player1.bomb;
+    document.getElementById('rpg-quantity').innerText = 'Rpg: ' + player1.rpg;
+
+
 }
 
 
@@ -284,21 +367,21 @@ function render(ctx) {
     //draw player
     if(!isGameOver){
         player1.render(ctx);
-        ctx.strokeRect(player1.boundingBox.x, player1.boundingBox.y, player1.boundingBox.width, player1.boundingBox.height);
+        //ctx.strokeRect(player1.boundingBox.x, player1.boundingBox.y, player1.boundingBox.width, player1.boundingBox.height);
     }
 
     //draw cars
     carsArrRight.forEach(function(car){
         car.render(ctx);
-        ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
+        //ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
     });
     carsArrLeft.forEach(function(car){
         car.renderL(ctx);
-        ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
+        //ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
     });
     carsArrUp.forEach(function(car){
         car.renderU(ctx);
-        ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
+        //ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
     });
 
 
@@ -306,7 +389,7 @@ function render(ctx) {
     if(moneyArr.length > 0) {
         moneyArr.forEach(function(elem){
             elem.render(ctx);
-            ctx.strokeRect(elem.boundingBox.x, elem.boundingBox.y, elem.boundingBox.width, elem.boundingBox.height);
+            //ctx.strokeRect(elem.boundingBox.x, elem.boundingBox.y, elem.boundingBox.width, elem.boundingBox.height);
         });
     }
 
@@ -314,14 +397,21 @@ function render(ctx) {
     if(bombArr.length > 0) {
         bombArr.forEach(function(elem){
             elem.render(ctx);
-            ctx.strokeRect(elem.boundingBox.x, elem.boundingBox.y, elem.boundingBox.width, elem.boundingBox.height);
+            //ctx.strokeRect(elem.boundingBox.x, elem.boundingBox.y, elem.boundingBox.width, elem.boundingBox.height);
+        });
+    }
+    //draw rpg price
+    if(rpgArr.length > 0) {
+        rpgArr.forEach(function(elem){
+            elem.render(ctx);
+            //ctx.strokeRect(elem.boundingBox.x, elem.boundingBox.y, elem.boundingBox.width, elem.boundingBox.height);
         });
     }
     //draw deplyed bomb
     if(deployedBombs.length > 0) {
         deployedBombs.forEach(function(bomb){
             bomb.render(ctx);
-            ctx.strokeRect(bomb.boundingBox.x, bomb.boundingBox.y, bomb.boundingBox.width, bomb.boundingBox.height);
+            //ctx.strokeRect(bomb.boundingBox.x, bomb.boundingBox.y, bomb.boundingBox.width, bomb.boundingBox.height);
         });
     }
 
@@ -329,6 +419,14 @@ function render(ctx) {
     if(explosionsArr.length > 0) {
         explosionsArr.forEach(function(explosion){
             explosion.render(ctx);
+        });
+    }
+
+    //draw rpg
+    if(deployedRpg.length > 0) {
+        deployedRpg.forEach(function(rpg){
+            rpg.render(ctx)
+            //ctx.strokeRect(rpg.boundingBox.x, rpg.boundingBox.y, rpg.boundingBox.width, rpg.boundingBox.height);
         });
     }
 
@@ -340,6 +438,17 @@ function movePlayer() {
     player1.movement.up = !!input.up;
     player1.movement.down = !!input.down;
     isBombDeployed = !!input.b;
+    isRgpDeployed = !!input.space;
+
+    if(player1.movement.down) {
+        movement = 'down';
+    } else if(player1.movement.up) {
+        movement = 'up';
+    } else if (player1.movement.left) {
+        movement = 'left';
+    } else if (player1.movement.right) {
+        movement = 'right';
+    }
 }
 
 function getDiffInTime (prevTime) {
@@ -377,9 +486,17 @@ function gameOver() {
     deployedBombs.forEach(function(bomb){
         deployedBombs.removeAt(deployedBombs.indexOf(bomb));
     });
+    deployedRpg.forEach(function(rpg){
+        deployedRpg.removeAt(deployedRpg.indexOf(rpg));
+        prevRpgShooted = Date.now();
+    });
     bombArr.forEach(function(bomb){
         bombArr.removeAt(bombArr.indexOf(bomb));
         prevBombGenTime = Date.now();
+    });
+    rpgArr.forEach(function(rpg){
+        rpgArr.removeAt(rpgArr.indexOf(rpg));
+        prevRpgGenTime = Date.now();
     });
 }
 
@@ -393,6 +510,7 @@ function reset() {
     moneyArr = [];
     player1.scores = 0;
     player1.bomb = 0;
+    player1.rpg = 0;
     player1.position.x = randomNumInRange(30, canvas.width-player1.width-30);
     player1.position.y = randomNumInRange(0, canvas.height-player1.height);
 }

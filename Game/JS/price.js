@@ -18,6 +18,12 @@ var Price = (function () {
                 this.animation = new Animation( 81, 81, 4, 0, 8, 'resources/bombPrice.png', 5, 8, 4, this.resizeIndex-1);
                 this.boundingBox = new Rectangle(this.position.x, this.position.y, 81/this.resizeIndex +10, 81/this.resizeIndex +10);
                 break;
+            case 'rpg':
+                this.position.x = this.position.x+15;
+                this.position.y = this.position.y+15;
+                this.animation = new Animation( 81, 81, 5, 0, 8, 'resources/bombPrice.png', 5, 8, 5, this.resizeIndex-1);
+                this.boundingBox = new Rectangle(this.position.x, this.position.y, 81/this.resizeIndex +10, 81/this.resizeIndex +10);
+                break;
             default : break;
         }
     }
@@ -25,7 +31,7 @@ var Price = (function () {
     Price.prototype.update = function () {
 
         this.animation.position.set(this.position.x, this.position.y);
-        if(this.type === 'bomb') {
+        if(this.type === 'bomb' || this.type === 'rpg') {
             this.boundingBox.x = this.position.x+15;
             this.boundingBox.y = this.position.y+15;
         } else {

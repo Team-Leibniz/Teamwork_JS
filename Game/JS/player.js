@@ -10,6 +10,7 @@ var Player = (function(){
         this.height = 159;
         this.scores = 0;
         this.bomb = 0;
+        this.rpg = 0;
         this.resizeIndex = 2.7;
         //var posX = x-100;
         //var posY = y-100;

@@ -17,6 +17,9 @@ function generatePrices(type) {
         case 'bomb' :
             var price = new Price(posX,posY,type);
             bombArr.push(price); break;
+        case 'rpg' :
+            var price = new Price(posX,posY,type);
+            rpgArr.push(price); break;
         default : break;
     }
 }
@@ -26,6 +29,10 @@ function deployBomb(posX,posY,bombDeployTime) {
     //var bomb = new Price(posX,posY,'money');
 
     deployedBombs.push(bomb);
+}
+function deployRpg(posX,posY,bombDeployTime,movement) {
+    var rpg = new DepBombs(posX,posY,bombDeployTime,'rpg',movement);
+    deployedRpg.push(rpg);
 }
 function deployedExplosion(posX,posY,explDeployTime) {
     var explosion = new DepBombs(posX,posY,explDeployTime,'explosion');
