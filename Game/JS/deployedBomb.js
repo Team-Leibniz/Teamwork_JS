@@ -18,7 +18,7 @@ var DepBombs = (function () {
                 this.boundingBox = new Rectangle(posX, posY, this.width+100, this.height+100);
                 break;
             case 'explosion':  this.animation = new Animation(64,64,0,0,16,
-                'resources/explosion.png',7,0,0,this.resizeIndex);
+                'resources/explosion.png',7,0,0,this.resizeIndex-1.5);
                 this.boundingBox = new Rectangle(x, y, 75/this.resizeIndex, 75/this.resizeIndex);
                 break;
             default : break;

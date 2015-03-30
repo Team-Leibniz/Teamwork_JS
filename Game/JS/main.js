@@ -316,24 +316,27 @@ function render(ctx) {
         ctx.strokeRect(car.position.x,car.position.y,car.width,car.height);
     });
     carsArrLeft.forEach(function(car){
-        car.render(ctx);
+        car.renderL(ctx);
         ctx.strokeRect(car.position.x,car.position.y,car.width,car.height);
     });
     carsArrUp.forEach(function(car){
-        car.render(ctx);
+        car.renderU(ctx);
         ctx.strokeRect(car.position.x,car.position.y,car.width,car.height);
     });
+
 
     //draw prices
     if(moneyArr.length > 0) {
         moneyArr.forEach(function(elem){
             elem.render(ctx);
+            ctx.strokeRect(elem.position.x,elem.position.y,elem.width,elem.height);
         });
     }
     //draw bomb price
     if(bombArr.length > 0) {
         bombArr.forEach(function(elem){
             elem.render(ctx);
+            ctx.strokeRect(elem.position.x,elem.position.y,elem.width,elem.height);
         });
     }
     //draw deplyed bomb
@@ -403,6 +406,7 @@ function reset() {
     carsArrUp = [];
     moneyArr = [];
     player1.scores = 0;
+    player1.bomb = 0;
     player1.position.x = randomNumInRange(30, canvas.width-player1.width-30);
     player1.position.y = randomNumInRange(0, canvas.height-player1.height);
 }
