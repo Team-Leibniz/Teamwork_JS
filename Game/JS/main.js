@@ -290,15 +290,15 @@ function render(ctx) {
     //draw cars
     carsArrRight.forEach(function(car){
         car.render(ctx);
-        ctx.strokeRect(car.position.x,car.position.y,car.width,car.height);
+        ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
     });
     carsArrLeft.forEach(function(car){
         car.renderL(ctx);
-        ctx.strokeRect(car.position.x,car.position.y,car.width,car.height);
+        ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
     });
     carsArrUp.forEach(function(car){
         car.renderU(ctx);
-        ctx.strokeRect(car.position.x,car.position.y,car.width,car.height);
+        ctx.strokeRect(car.boundingBox.x, car.boundingBox.y, car.boundingBox.width, car.boundingBox.height);
     });
 
 
@@ -306,7 +306,7 @@ function render(ctx) {
     if(moneyArr.length > 0) {
         moneyArr.forEach(function(elem){
             elem.render(ctx);
-            ctx.strokeRect(elem.position.x,elem.position.y,elem.width,elem.height);
+            ctx.strokeRect(elem.boundingBox.x, elem.boundingBox.y, elem.boundingBox.width, elem.boundingBox.height);
         });
     }
 
@@ -314,7 +314,7 @@ function render(ctx) {
     if(bombArr.length > 0) {
         bombArr.forEach(function(elem){
             elem.render(ctx);
-            ctx.strokeRect(elem.position.x,elem.position.y,elem.width,elem.height);
+            ctx.strokeRect(elem.boundingBox.x, elem.boundingBox.y, elem.boundingBox.width, elem.boundingBox.height);
         });
     }
     //draw deplyed bomb
@@ -367,11 +367,19 @@ function modifyCarSpeed() {
 }
 function gameOver() {
     player1.position.set(-30,-30);
+    document.getElementById('result').innerText = 'Scores: ' + player1.scores;
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
     //isGameOver = true;
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
+    })
+    deployedBombs.forEach(function(bomb){
+        deployedBombs.removeAt(deployedBombs.indexOf(bomb));
+    });
+    bombArr.forEach(function(bomb){
+        bombArr.removeAt(bombArr.indexOf(bomb));
+        prevBombGenTime = Date.now();
     });
 }
 

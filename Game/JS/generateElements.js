@@ -9,10 +9,14 @@ function generatePlayer() {
 function generatePrices(type) {
     var posX = randomNumInRange(20,canvas.width -50);
     var posY = randomNumInRange(20,canvas.height - 50)
-    var price = new Price(posX,posY,type);
+
     switch (type) {
-        case 'money' : moneyArr.push(price); break
-        case 'bomb' : bombArr.push(price); break;
+        case 'money' :
+            var price = new Price(posX,posY,type);
+            moneyArr.push(price); break
+        case 'bomb' :
+            var price = new Price(posX,posY,type);
+            bombArr.push(price); break;
         default : break;
     }
 }

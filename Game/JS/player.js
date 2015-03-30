@@ -5,17 +5,17 @@ var Player = (function(){
     function Player(x, y, rowClip) {
         this.position = new Vector2(x, y);
         this.movement = {left: false, right : false, up: false, down: false};
-        this.velocity = 2;
+        this.velocity = 3;
         this.width = 95;
         this.height = 159;
         this.scores = 0;
         this.bomb = 0;
         this.resizeIndex = 2.7;
-        var posX = x-100;
-        var posY = y-100;
+        //var posX = x-100;
+        //var posY = y-100;
 
         this.animation = new Animation( this.width, this.height, 0, 0, 1, 'resources/player.png', 1, 1, 0, this.resizeIndex);
-        this.boundingBox = new Rectangle (posX, posY, this.width/this.resizeIndex -5, (this.height/this.resizeIndex)-10);
+        this.boundingBox = new Rectangle (x+5, y+10, this.width/this.resizeIndex-8, (this.height/this.resizeIndex)-12);
     }
 
     Player.prototype.update = function() {
@@ -50,8 +50,8 @@ var Player = (function(){
         }
 
         this.animation.position.set(this.position.x, this.position.y);
-        this.boundingBox.x = this.position.x;
-        this.boundingBox.y = this.position.y;
+        this.boundingBox.x = this.position.x+5;
+        this.boundingBox.y = this.position.y+10;
         this.animation.update();
     };
 
