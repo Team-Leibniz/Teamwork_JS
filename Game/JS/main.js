@@ -11,7 +11,6 @@ attachListeners(input);
 
 var player1 = generatePlayer();
 
-var button = document.getElementById('hide');
 var carsArrRight = [];
 var carsArrLeft = [];
 var carsArrUp = [];
@@ -20,7 +19,7 @@ var positionY = [24,45,66,118,140,162,256,278,300,356,381,406,493,518,543,601,62
 var prevRightCarRow;
 var prevLeftCarRow;
 var prevUpCarRow;
-var isGameOver = true;
+var isGameOver;
 var gameDofficulty = 2;
 var bombArr = [];
 var deployedBombs = [];
@@ -44,20 +43,13 @@ var coinSound = document.getElementById("coin-sound");
 var explosionSound = document.getElementById("explosion");
 
 
-button.onclick = function() {
-    var div = document.getElementById('new-game');
-    if (div.style.display !== 'none') {
-        div.style.display = 'none';
-        isGameOver = false;
-    }
-    else {
-        div.style.display = 'block';
-    }
-};
-
 var runOverPic = new Image();
 runOverPic.src = 'resources/runOver.jpg';
 ctx.drawImage(runOverPic,200,150); // image,x,y,size
+
+
+
+
 
 function update() {
     this.tick();
@@ -72,7 +64,6 @@ function tick() {
     if(isBombDeployed && (player1.bomb > 0)) {
         deployBomb(player1.position.x, player1.position.y,Date.now());
         isBombDeployed = false;
-        player1.bomb--;
     }
 
     carsArrRight.forEach(function(car){
@@ -350,14 +341,6 @@ function gameOver() {
         reset();
     });
 }
-
-function switchStartMenu() {
-    document.getElementById('new-game').addEventListener('click',function() {
-        newGame();
-    });
-}
-
-
 
 function reset() {
     document.getElementById('game-over').style.display = 'none';

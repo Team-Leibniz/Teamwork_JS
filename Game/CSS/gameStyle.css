@@ -20,48 +20,9 @@
     font-size: 25px;
     color: #99C68E;
 }
-.wrapper {
+.canvas-wrapper {
     width: 1400px;
     margin: 0 auto;
-}
-#new-game {
-    width: 1334px;
-    height:744px;
-    position: absolute;
-    z-index: 3;
-    background-color: #222222;
-}
-#new-game img {
-    display: block;
-    box-shadow: 0 5px 35px rgba(0,0,0,.65);
-    margin-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-#new-game button {
-    width: 250px;
-    height: 75px;
-    background-color: transparent;
-    font-family: Lobster, sans-serif;
-    font-size: 25px;
-    border: 1px solid transparent;
-    box-shadow: 0 5px 35px rgba(0,0,0,.65);
-    color: aqua;
-    margin-top: 100px;
-    margin-left: 542px;
-}
-#new-game button:hover {
-    background-color: aqua;
-    box-shadow: 0 5px 35px rgba(0,255,0,.65);
-    color: white;
-
-}
-#new-game h1 {
-    text-align: center;
-    font-size: 55px;
-    font-family: Lobster, sans-serif;
-    color: aqua;
 }
 #game-over, #game-over-overlay {
     margin: 0 auto;
