@@ -36,6 +36,7 @@ button.onclick = function() {
     }
     else {
         div.style.display = 'block';
+        isGameOver = true;
     }
 };
 
@@ -64,7 +65,9 @@ ctx.drawImage(runOverPic,200,150); // image,x,y,size
 
 
 function update() {
-    this.tick();
+    if(!isGameOver) {
+        this.tick();
+    }
     this.render(ctx);
     requestAnimationFrame(update);
 }
