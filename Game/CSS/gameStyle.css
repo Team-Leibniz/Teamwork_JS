@@ -14,20 +14,60 @@
     height: 40px;
     background-color: #666362;
 }
-#scores {
+#scores, #bombs-quantity, #rpg-quantity {
     font-family: Lobster, sans-serif;
     line-height: 40px;
-    font-size: 25px;
+    font-size: 35px;
     color: #99C68E;
+    margin-left: 75px;
 }
-.canvas-wrapper {
+.wrapper {
     width: 1400px;
     margin: 0 auto;
+}
+#new-game {
+    width: 1334px;
+    height:744px;
+    position: absolute;
+    z-index: 3;
+    background-color: #222222;
+}
+#new-game img {
+    display: block;
+    box-shadow: 0 5px 35px rgba(0,0,0,.65);
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+#hide {
+    width: 250px;
+    height: 75px;
+    background-color: transparent;
+    font-family: Lobster, sans-serif;
+    font-size: 25px;
+    border: 1px solid transparent;
+    box-shadow: 0 5px 35px rgba(0,0,0,.65);
+    color: aqua;
+    margin-top: 75px;
+    margin-left: 542px;
+}
+#new-game button:hover {
+    background-color: aqua;
+    box-shadow: 0 5px 35px rgba(0,255,0,.65);
+    color: white;
+
+}
+#new-game h1 {
+    text-align: center;
+    font-size: 55px;
+    font-family: Lobster, sans-serif;
+    color: aqua;
 }
 #game-over, #game-over-overlay {
     margin: 0 auto;
     width: 512px;
-    height: 480px;
+    height: 520px;
     position: absolute;
     top: 80px;
     left: 0;
@@ -46,13 +86,16 @@
     font-family: Lobster, sans-serif;
     font-size: 25px;
     color: aqua;
-    height: 200px;
     text-align: center;
 }
 
 #game-over h1 {
     font-size: 3em;
     font-family: Lobster, sans-serif;
+    margin-bottom: 0px;
+}
+#game-over h2 {
+    margin-bottom: 5px;
 }
 
 #game-over button {
@@ -63,4 +106,19 @@
 }
 #game-over button:hover {
     border: 2px solid aqua;
+}
+.difficulty-buttons {
+    margin-top: 50px;
+    margin-left: 360px;
+}
+.difficulty {
+    width: 150px;
+    height: 35px;
+    display: inline;
+    background-color: transparent;
+    font-family: Lobster, sans-serif;
+    font-size: 25px;
+    border: 1px solid transparent;
+    box-shadow: 0 5px 35px rgba(0,0,0,.65);
+    color: aqua;
 }

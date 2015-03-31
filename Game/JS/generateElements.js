@@ -6,18 +6,45 @@ function generatePlayer() {
     var player1 = new Player(canvas.width/4, 1,0);
     return player1
 }
-function generatePrices() {
+function generatePrices(type) {
     var posX = randomNumInRange(20,canvas.width -50);
     var posY = randomNumInRange(20,canvas.height - 50)
-    var price = new Price(posX,posY);
-    pricesArr.push(price);
+
+    switch (type) {
+        case 'money' :
+            var price = new Price(posX,posY,type);
+            moneyArr.push(price); break
+        case 'bomb' :
+            var price = new Price(posX,posY,type);
+            bombArr.push(price); break;
+        case 'rpg' :
+            var price = new Price(posX,posY,type);
+            rpgArr.push(price); break;
+        default : break;
+    }
 }
 
+function deployBomb(posX,posY,bombDeployTime) {
+    var bomb = new DepBombs(posX,posY,bombDeployTime,'bomb');
+    //var bomb = new Price(posX,posY,'money');
+
+    deployedBombs.push(bomb);
+}
+function deployRpg(posX,posY,bombDeployTime,movement) {
+    var rpg = new DepBombs(posX,posY,bombDeployTime,'rpg',movement);
+    deployedRpg.push(rpg);
+}
+function deployedExplosion(posX,posY,explDeployTime) {
+    var explosion = new DepBombs(posX,posY,explDeployTime,'explosion');
+    //var bomb = new Price(posX,posY,'money');
+
+    explosionsArr.push(explosion);
+}
 
 
 function generateCars(){
 
-    if(carsArrRight.length < 55 && getDiffInTime(previousTimeRightCar) >= gameDofficulty) {
+    if(carsArrRight.length < 55 && getDiffInTime(previousTimeRightCar) >= gameDifficulty) {
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevRightCarRow);
@@ -26,7 +53,7 @@ function generateCars(){
         carsArrRight.push(new Car(1, posY,'right'));
         previousTimeRightCar = Date.now();
     }
-    if(carsArrLeft.length < 55 && getDiffInTime(previousTimeLeftCar) >= gameDofficulty) {
+    if(carsArrLeft.length < 55 && getDiffInTime(previousTimeLeftCar) >= gameDifficulty) {
         do {
             var rand = randomNumInRange(0,5)
         } while(rand == prevLeftCarRow);
@@ -35,11 +62,11 @@ function generateCars(){
         carsArrLeft.push(new Car(canvas.width-50, posY,'left'));
         previousTimeLeftCar = Date.now();
     }
-    if(carsArrUp.length < 4 && getDiffInTime(previousTimeUpCar) >= gameDofficulty*1.5) {
+    if(carsArrUp.length < 4 && getDiffInTime(previousTimeUpCar) >= gameDifficulty*1.5) {
         do {
             var rand = randomNumInRange(0,2)
         } while(rand == prevUpCarRow);
-        var posX = canvas.width/2 - 50 * rand;
+        var posX = canvas.width/2 - 35 * rand;
         prevUpCarRow = rand;
         carsArrUp.push(new Car(posX, canvas.height,'up'));
         previousTimeUpCar = Date.now();
@@ -50,4 +77,8 @@ function generateCars(){
 function randomNumInRange(min,max) {
     var randNum =  Math.floor(Math.random() * (max - min +1)) + min;
     return randNum;
+}
+
+function setGameDifficulty(difficulty) {
+    gameDifficulty = parseFloat(difficulty);
 }
