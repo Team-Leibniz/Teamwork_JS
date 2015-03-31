@@ -2,8 +2,8 @@
  * Created by toshiba on 30.3.2015 г..
  */
     //this ""class" deploys bombs and explosions in canvas scene
-var DepBombs = (function () {
-    function DepBombs(x, y, bombDeployTime, name, movement) {
+var DepElements = (function () {
+    function DepElemts(x, y, bombDeployTime, name, movement) {
         this.type = name;
         this.position = new Vector2(x, y);
         this.width = 75;
@@ -35,12 +35,17 @@ var DepBombs = (function () {
                 this.height = 64;
                 this.boundingBox = new Rectangle(x+15, y+15, this.width-30, this.height-30);
                 break;
+            case 'runoverPic' :
+                this.resizeIndex = 3;
+                this.animation = new Animation(460,322,0,0,1,'resources/runOver.jpg',1,0,0,this.resizeIndex);
+                this.boundingBox = new Rectangle(this.position.x, this.position.y, this.width, this.height);
+                break;
             default : break;
         }
 
     }
 
-    DepBombs.prototype.update = function () {
+    DepElemts.prototype.update = function () {
         if(this.type == 'rpg') {
             if(this.movement.right ) {
                 this.position.x += this.velocity;
@@ -72,9 +77,9 @@ var DepBombs = (function () {
 
     };
 
-    DepBombs.prototype.render = function(ctx) {
+    DepElemts.prototype.render = function(ctx) {
         this.animation.draw(ctx);
     };
 
-    return DepBombs;
+    return DepElemts;
 }());

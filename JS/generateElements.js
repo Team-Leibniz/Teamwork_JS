@@ -25,20 +25,23 @@ function generatePrices(type) {
 }
 
 function deployBomb(posX,posY,bombDeployTime) {
-    var bomb = new DepBombs(posX,posY,bombDeployTime,'bomb');
+    var bomb = new DepElements(posX,posY,bombDeployTime,'bomb');
     //var bomb = new Price(posX,posY,'money');
 
     deployedBombs.push(bomb);
 }
 function deployRpg(posX,posY,bombDeployTime,movement) {
-    var rpg = new DepBombs(posX,posY,bombDeployTime,'rpg',movement);
+    var rpg = new DepElements(posX,posY,bombDeployTime,'rpg',movement);
     deployedRpg.push(rpg);
 }
 function deployedExplosion(posX,posY,explDeployTime) {
-    var explosion = new DepBombs(posX,posY,explDeployTime,'explosion');
+    var explosion = new DepElements(posX,posY,explDeployTime,'explosion');
     //var bomb = new Price(posX,posY,'money');
-
     explosionsArr.push(explosion);
+}
+function deployRunoverPic(posX,posY,bombDeployTime) {
+    var pic = new DepElements(posX,posY,bombDeployTime,'runoverPic');
+    runOverPicArr.push(pic);
 }
 
 

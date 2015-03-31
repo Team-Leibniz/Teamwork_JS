@@ -12,6 +12,7 @@ attachListeners(input);
 var player1 = generatePlayer();
 
 var button = document.getElementById('hide');
+var runOverPicArr = [];
 var carsArrRight = [];
 var carsArrLeft = [];
 var carsArrUp = [];
@@ -56,19 +57,11 @@ button.onclick = function() {
 
 
 // Initialise sounds
-
 var carHorn1 = document.getElementById("car-horn1");
 var carCrash = document.getElementById("car-crash");
 var coinSound = document.getElementById("coin-sound");
 var explosionSound = document.getElementById("explosion");
-
-
-var runOverPic = new Image();
-runOverPic.src = 'resources/runOver.jpg';
-ctx.drawImage(runOverPic,200,150); // image,x,y,size
-
-
-
+var scream = document.getElementById("scream");
 
 
 function update() {
@@ -107,8 +100,11 @@ function tick() {
         if(player1.boundingBox.intersects(car.boundingBox)) {
             car.position.x -= (car.velocity + 1);
             if(!isGameOver){
+                deployRunoverPic(player1.position.x,player1.position.y);
+                scream.volume = 1;
+                scream.play();
                 isGameOver = true;
-                ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
+                carCrash.volume = 0.9;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
             }
@@ -149,8 +145,11 @@ function tick() {
         if(player1.boundingBox.intersects(car.boundingBox)) {
             car.position.x += (car.velocity + 1);
             if(!isGameOver){
-                ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
+                deployRunoverPic(player1.position.x,player1.position.y);
+                scream.volume = 1;
+                scream.play();
                 isGameOver = true;
+                carCrash.volume = 0.9;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
             }
@@ -191,10 +190,12 @@ function tick() {
 
         if(player1.boundingBox.intersects(car.boundingBox)) {
             car.position.y += (car.velocity + 1);
-            ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
             if(!isGameOver){
-                ctx.drawImage(runOverPic,player1.position.x,player1.position.y,200,150); // image,x,y,size
+                deployRunoverPic(player1.position.x,player1.position.y);
+                scream.volume = 1;
+                scream.play();
                 isGameOver = true;
+                carCrash.volume = 0.9;
                 carCrash.play();
                 var timeOut = setTimeout(gameOver,2000);
             }
@@ -360,6 +361,13 @@ function tick() {
         });
     }
 
+    //update runOverPic
+    if(runOverPicArr.length > 0) {
+        runOverPicArr.forEach(function(pic){
+            pic.update()
+        });
+    }
+
     player1.update();
     document.getElementById('scores').innerText = 'Scores: ' + player1.scores;
     document.getElementById('bombs-quantity').innerText = 'Bombs: ' + player1.bomb;
@@ -432,7 +440,14 @@ function render(ctx) {
     //draw rpg
     if(deployedRpg.length > 0) {
         deployedRpg.forEach(function(rpg){
-            rpg.render(ctx)
+            rpg.render(ctx);
+            //ctx.strokeRect(rpg.boundingBox.x, rpg.boundingBox.y, rpg.boundingBox.width, rpg.boundingBox.height);
+        });
+    }
+    //draw runoverPic
+    if(runOverPicArr.length > 0) {
+        runOverPicArr.forEach(function(pic){
+            pic.render(ctx);
             //ctx.strokeRect(rpg.boundingBox.x, rpg.boundingBox.y, rpg.boundingBox.width, rpg.boundingBox.height);
         });
     }
@@ -508,6 +523,7 @@ function gameOver() {
 }
 
 function reset() {
+    runOverPic = undefined;
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('game-over-overlay').style.display = 'none';
     isGameOver = false;
@@ -518,6 +534,9 @@ function reset() {
     player1.scores = 0;
     player1.bomb = 0;
     player1.rpg = 0;
+    runOverPicArr.forEach(function(pic){
+        runOverPicArr.removeAt(runOverPicArr.indexOf(pic));
+    });
     player1.position.x = randomNumInRange(30, canvas.width-player1.width-30);
     player1.position.y = randomNumInRange(0, canvas.height-player1.height);
 }
