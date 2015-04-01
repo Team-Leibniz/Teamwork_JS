@@ -37,7 +37,7 @@ var DepElements = (function () {
                 break;
             case 'runoverPic' :
                 this.resizeIndex = 3;
-                this.animation = new Animation(460,322,0,0,1,'resources/runOver.jpg',1,0,0,this.resizeIndex);
+                this.animation = new Animation(460,322,0,0,1,'resources/runOver.png',1,0,0,this.resizeIndex);
                 this.boundingBox = new Rectangle(this.position.x, this.position.y, this.width, this.height);
                 break;
             default : break;
