@@ -12,6 +12,8 @@ attachListeners(input);
 var player1 = generatePlayer();
 
 var button = document.getElementById('hide');
+var buttonClose = document.getElementById("close");
+var buttonInstructions = document.getElementById("instructions-btn");
 var runOverPicArr = [];
 var carsArrRight = [];
 var carsArrLeft = [];
@@ -43,8 +45,10 @@ var movement;
 
 button.onclick = function() {
     var div = document.getElementById('new-game');
+    var divInstructions = document.getElementById('instructions');
     if (div.style.display !== 'none') {
         div.style.display = 'none';
+        divInstructions.style.display = 'none';
         isGameOver = false;
     }
     else {
@@ -52,6 +56,21 @@ button.onclick = function() {
         isGameOver = true;
     }
 };
+
+buttonClose.addEventListener('click', function () {
+    var div = document.getElementById('instructions');
+   if(div.style.zIndex == '6') {
+       div.style.zIndex = '4';
+   }
+}, false);
+
+buttonInstructions.addEventListener('click', function () {
+    console.log('buttonInstructions');
+    var div = document.getElementById('instructions');
+    if(div.style.zIndex <= '5') {
+        div.style.zIndex = '6';
+    }
+}, false);
 
 
 

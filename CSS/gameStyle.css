@@ -29,7 +29,7 @@
     width: 1334px;
     height:744px;
     position: absolute;
-    z-index: 3;
+    z-index: 5;
     background-color: #222222;
 }
 #new-game img {
@@ -40,9 +40,10 @@
     margin-right: auto;
 
 }
-#hide {
+#hide, #instructions-btn {
     width: 250px;
     height: 75px;
+    display: inline-block;
     background-color: transparent;
     font-family: Lobster, sans-serif;
     font-size: 25px;
@@ -50,7 +51,7 @@
     box-shadow: 0 5px 35px rgba(0,0,0,.65);
     color: aqua;
     margin-top: 75px;
-    margin-left: 542px;
+    margin-left: 275px;
 }
 #new-game button:hover {
     background-color: aqua;
@@ -58,7 +59,7 @@
     color: white;
 
 }
-#new-game h1 {
+#new-game h1, #instructions h1  {
     text-align: center;
     font-size: 55px;
     font-family: Lobster, sans-serif;
@@ -121,4 +122,59 @@
     border: 1px solid transparent;
     box-shadow: 0 5px 35px rgba(0,0,0,.65);
     color: aqua;
+}
+
+#instructions {
+    width: 1334px;
+    height: 744px;
+    background-color: #222222;
+    position: absolute;
+    z-index: 4;
+
+}
+
+#keys {
+    background: url("../resources/arrow_keys.png");
+    width: 400px;
+    height: 250px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+    margin-left: 150px;
+    margin-top: 150px;
+}
+
+#text {
+    display: inline-block;
+}
+
+#text ul {
+    list-style: none;
+}
+
+#text li {
+    font-size: 3em;
+    font-family: Lobster, sans-serif;
+    margin-bottom: 0px;
+    color: white;
+    margin-left: 150px;
+}
+
+#close {
+    width: 250px;
+    height: 75px;
+    background-color: transparent;
+    font-family: Lobster, sans-serif;
+    font-size: 45px;
+    border: 1px solid transparent;
+    box-shadow: 0 5px 35px rgba(0,0,0,.65);
+    color: aqua;
+    margin-top: 40px;
+    margin-left: 542px;
+}
+#instructions button:hover {
+    background-color: aqua;
+    box-shadow: 0 5px 35px rgba(0,255,0,.65);
+    color: white;
+
 }
