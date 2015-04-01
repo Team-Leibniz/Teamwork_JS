@@ -100,13 +100,13 @@ function tick() {
             deployDoorPic(canvas.width/2 - 30, canvas.height/2 - 50, Date.now());
         } break;
         case 1.5: if(player1.scores >= 2000 && exitDoor < 1){
-            deployDoorPic(canvas.width/2 - 30, canvas.height/2 - 30, Date.now());
+            deployDoorPic(canvas.width/2 - 30, canvas.height/2 - 50, Date.now());
         } break;
         case 1: if(player1.scores >= 5000 && exitDoor < 1){
-            deployDoorPic(canvas.width/2, canvas.height/2, Date.now());
+            deployDoorPic(canvas.width/2 - 30, canvas.height/2 - 50, Date.now());
         } break;
         case 0.5: if(player1.scores >= 10000 && exitDoor < 1){
-            deployDoorPic(canvas.width/2, canvas.height/2, Date.now());
+            deployDoorPic(canvas.width/2 - 30, canvas.height/2 - 50, Date.now());
         } break;
         default:  break;
 
