@@ -50,7 +50,7 @@
     border: 1px solid transparent;
     box-shadow: 0 5px 35px rgba(0,0,0,.65);
     color: aqua;
-    margin-top: 75px;
+    margin-top: 45px;
     margin-left: 275px;
 }
 #new-game button:hover {
@@ -64,6 +64,16 @@
     font-size: 55px;
     font-family: Lobster, sans-serif;
     color: aqua;
+}
+#new-game p {
+    color: #ffffff;
+    font-size: 1.1em;
+    margin-top: 35px;
+    text-align: center;
+}
+#new-game p a {
+    color: aqua;
+    font-size: 1.3em;
 }
 #game-over, #game-over-overlay {
     margin: 0 auto;
@@ -153,11 +163,15 @@
 }
 
 #text li {
-    font-size: 3em;
+    font-size: 1.5em;
     font-family: Lobster, sans-serif;
     margin-bottom: 0px;
     color: white;
     margin-left: 150px;
+}
+
+span.movement {
+    color: aqua;
 }
 
 #close {
@@ -169,7 +183,6 @@
     border: 1px solid transparent;
     box-shadow: 0 5px 35px rgba(0,0,0,.65);
     color: aqua;
-    margin-top: 40px;
     margin-left: 542px;
 }
 #instructions button:hover {
@@ -177,4 +190,35 @@
     box-shadow: 0 5px 35px rgba(0,255,0,.65);
     color: white;
 
+}
+li#bomb, li#rpg, li#money {
+    line-height: 69px;
+    vertical-align: top;
+}
+li#bomb > span {
+    overflow: hidden;
+    display: inline-block;
+    background: url("../resources/bombPrice.png");
+    width: 81px;
+    height: 65px;
+    background-position:  0px -324px;
+
+}
+li#rpg > span {
+    overflow: hidden;
+    display: inline-block;
+    background: url("../resources/bombPrice.png");
+    width: 81px;
+    height: 65px;
+    background-position:  0px -405px;
+
+}
+li#money > span {
+    overflow: hidden;
+    display: inline-block;
+    background: url("../resources/gold_coin.png");
+    width: 64px;
+    height: 64px;
+    background-position:  0px -128px;
+    margin-left: 10px;
 }
