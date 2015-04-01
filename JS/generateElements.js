@@ -1,7 +1,7 @@
 /**
  * Created by toshiba on 28.3.2015 г..
  */
-
+//Method for generating different elements(container)
 function generatePlayer() {
     var player1 = new Player(canvas.width/4, 1,0);
     return player1
@@ -42,6 +42,10 @@ function deployedExplosion(posX,posY,explDeployTime) {
 function deployRunoverPic(posX,posY,bombDeployTime) {
     var pic = new DepElements(posX,posY,bombDeployTime,'runoverPic');
     runOverPicArr.push(pic);
+}
+function deployDoorPic(posX,posY,bombDeployTime) {
+    var door = new DepElements(posX,posY,bombDeployTime,'exitDoor');
+    exitDoor.push(door);
 }
 
 

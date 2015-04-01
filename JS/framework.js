@@ -303,6 +303,7 @@ var Rectangle = (function() {
 }());
 
 var Animation = (function() {
+    //Added resize arg.
     function Animation(width, height, row, column, limit, imgSrc, fps, columns, rows, resize) {
         if(!fps || fps >=33) {
             this.fps = 1;

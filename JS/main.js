@@ -15,6 +15,7 @@ var button = document.getElementById('hide');
 var buttonClose = document.getElementById("close");
 var buttonInstructions = document.getElementById("instructions-btn");
 var runOverPicArr = [];
+var exitDoor = [];
 var carsArrRight = [];
 var carsArrLeft = [];
 var carsArrUp = [];
@@ -94,6 +95,22 @@ function update() {
 function tick() {
     movePlayer();
     generateCars();
+    switch (gameDifficulty) {
+        case 3: if(player1.scores >= 100 && exitDoor < 1){
+            deployDoorPic(canvas.width/2 - 30, canvas.height/2 - 50, Date.now());
+        } break;
+        case 1.5: if(player1.scores >= 2000 && exitDoor < 1){
+            deployDoorPic(canvas.width/2 - 30, canvas.height/2 - 30, Date.now());
+        } break;
+        case 1: if(player1.scores >= 5000 && exitDoor < 1){
+            deployDoorPic(canvas.width/2, canvas.height/2, Date.now());
+        } break;
+        case 0.5: if(player1.scores >= 10000 && exitDoor < 1){
+            deployDoorPic(canvas.width/2, canvas.height/2, Date.now());
+        } break;
+        default:  break;
+
+    }
     modifyCarSpeed();
     if(isBombDeployed && (player1.bomb > 0)) {
         deployBomb(player1.position.x, player1.position.y,Date.now());
@@ -285,6 +302,17 @@ function tick() {
         });
     }
 
+    //check for collision between player and door
+    if(exitDoor.length > 0) {
+        exitDoor.forEach(function(door){
+            if(door.boundingBox.intersects(player1.boundingBox)) {
+                if(!isGameOver){
+                    isGameOver = true;
+                    var timeOut = setTimeout(gameOver,0);
+                }
+            }
+        });
+    }
 
 
     //update prices
@@ -387,6 +415,12 @@ function tick() {
         });
     }
 
+    if(exitDoor.length > 0) {
+        exitDoor.forEach(function(pic){
+            pic.update()
+        });
+    }
+
     player1.update();
     document.getElementById('scores').innerText = 'Scores: ' + player1.scores;
     document.getElementById('bombs-quantity').innerText = 'Bombs: ' + player1.bomb;
@@ -470,6 +504,13 @@ function render(ctx) {
             //ctx.strokeRect(rpg.boundingBox.x, rpg.boundingBox.y, rpg.boundingBox.width, rpg.boundingBox.height);
         });
     }
+    //draw doorPic
+    if(exitDoor.length > 0) {
+        exitDoor.forEach(function(pic){
+            pic.render(ctx);
+            ctx.strokeRect(pic.boundingBox.x, pic.boundingBox.y, pic.boundingBox.width, pic.boundingBox.height);
+        });
+    }
 
 }
 
@@ -523,7 +564,7 @@ function gameOver() {
     //isGameOver = true;
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
-    })
+    });
     deployedBombs.forEach(function(bomb){
         deployedBombs.removeAt(deployedBombs.indexOf(bomb));
     });
@@ -537,6 +578,10 @@ function gameOver() {
     });
     rpgArr.forEach(function(rpg){
         rpgArr.removeAt(rpgArr.indexOf(rpg));
+        prevRpgGenTime = Date.now();
+    });
+    exitDoor.forEach(function(door){
+        exitDoor.removeAt(exitDoor.indexOf(door));
         prevRpgGenTime = Date.now();
     });
 }

@@ -40,6 +40,11 @@ var DepElements = (function () {
                 this.animation = new Animation(460,322,0,0,1,'resources/runOver.png',1,0,0,this.resizeIndex);
                 this.boundingBox = new Rectangle(this.position.x, this.position.y, this.width, this.height);
                 break;
+            case 'exitDoor' :
+                this.resizeIndex = 6;
+                this.animation = new Animation(529,616,0,0,1,'resources/door.png',1,0,0,this.resizeIndex);
+                this.boundingBox = new Rectangle(this.position.x, this.position.y, this.width, this.height + 30);
+                break;
             default : break;
         }
 
@@ -72,7 +77,12 @@ var DepElements = (function () {
             this.boundingBox.y = this.position.y - 75;
             this.animation.update();
         }
-
+        if(this.type == 'exitDoor') {
+            this.animation.position.set(this.position.x, this.position.y);
+            this.boundingBox.x = this.position.x;
+            this.boundingBox.y = this.position.y;
+            this.animation.update();
+        }
 
 
     };
