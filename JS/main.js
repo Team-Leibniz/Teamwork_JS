@@ -38,12 +38,6 @@ var isBombDeployed = false;
 var isRgpDeployed = false;
 var movement;
 
-
-
-
-
-
-
 button.onclick = function() {
     var div = document.getElementById('new-game');
     var divInstructions = document.getElementById('instructions');
@@ -307,6 +301,17 @@ function tick() {
         exitDoor.forEach(function(door){
             if(door.boundingBox.intersects(player1.boundingBox)) {
                 if(!isGameOver){
+                    switch (gameDifficulty) {
+                        case 3: document.getElementById("p1").innerHTML = "You win!";
+                        break;
+                        case 1.5: document.getElementById("p1").innerHTML = "You win!";
+                        break;
+                        case 1: document.getElementById("p1").innerHTML = "You win!";
+                        break;
+                        case 0.5: document.getElementById("p1").innerHTML = "MASTER!";
+                        break;
+                        default:  break;
+                    }
                     isGameOver = true;
                     var timeOut = setTimeout(gameOver,0);
                 }
@@ -508,7 +513,7 @@ function render(ctx) {
     if(exitDoor.length > 0) {
         exitDoor.forEach(function(pic){
             pic.render(ctx);
-            ctx.strokeRect(pic.boundingBox.x, pic.boundingBox.y, pic.boundingBox.width, pic.boundingBox.height);
+            //ctx.strokeRect(pic.boundingBox.x, pic.boundingBox.y, pic.boundingBox.width, pic.boundingBox.height);
         });
     }
 
@@ -591,6 +596,7 @@ function reset() {
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('game-over-overlay').style.display = 'none';
     isGameOver = false;
+    document.getElementById("p1").innerHTML = "GAME OVER!";
     carsArrRight = [];
     carsArrLeft = [];
     carsArrUp = [];
